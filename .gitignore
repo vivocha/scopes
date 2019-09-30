@@ -1,0 +1,26 @@
+# IDE / OS related files
+.vscode
+.idea
+.DS_Store
+
+# TypeScript typings/definitions
+typings
+
+# Node.js packages & dist
+node_modules
+dist
+
+# Tests & Results & Coverage
+test/ts/*.js
+test/ts/_*.ts
+test/ts/_*.js
+test/http/_*.http
+test-results
+mochawesome-report
+coverage
+.nyc_output
+loop-tests.sh
+.env
+
+# Serverless stack
+.serverless

@@ -1,0 +1,97 @@
+{
+  "name": "@vivocha/scopes",
+  "version": "0.0.0-development",
+  "description": "Vivocha API Scopes Utilities",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "directories": {
+    "test": "test"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "i:lock": "npm i && npm i --package-lock-only",
+    "build": "tsc",
+    "build:all": "npm run build && npm run build:tests",
+    "build:tests": "tsc -p test",
+    "clean": "npx rimraf dist coverage .nyc_output test-results",
+    "clean:all": "npm run clean && npx rimraf node_modules",
+    "cover": "nyc --reporter=lcov --reporter=text npm t",
+    "commit": "git-cz",
+    "check-coverage": "nyc check-coverage --statements 90 --branches 90 --functions 100 --lines 90",
+    "prebuild": "rm -rf dist",
+    "watch:test": "npm t -- -w",
+    "test": "find ./test/ts -type f -name '*.js' -delete && npm run build:all && mocha --exit --no-timeouts --recursive --reporter mochawesome --reporter-options reportDir=test-results test/**/*.test.js",
+    "test:debug": "find ./test/ts -type f -name '*.js' -delete && npm run build:all && mocha --exit --no-timeouts --inspect-brk --recursive test/**/*.test.js",
+    "test:watch": "nodemon -e ts --ignore dist/ --ignore 'test/ts/*.js' --exec npm run test",
+    "semantic-release": "semantic-release",
+    "semantic-release-dry": "semantic-release --dry-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vivocha/scopes.git"
+  },
+  "keywords": [
+    "vivocha"
+  ],
+  "author": "Vivocha Dev Team <dev@vivocha.com> (http://www.vivocha.com/)",
+  "license": "MIT",
+  "homepage": "https://github.com/vivocha/scopes.git#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "@types/chai": "^4.2.3",
+    "@types/chai-as-promised": "7.1.2",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.7.8",
+    "@types/request": "^2.48.3",
+    "@types/request-promise-native": "^1.0.17",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "cz-conventional-changelog": "^3.0.2",
+    "husky": "^3.0.7",
+    "mocha": "^6.2.1",
+    "mochawesome": "^4.1.0",
+    "nodemon": "^1.19.3",
+    "nyc": "^14.1.1",
+    "semantic-release": "^15.13.24",
+    "typescript": "^3.6.3"
+  },
+  "dependencies": {},
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "npm run build && npm run cover && npm run check-coverage"
+    }
+  },
+  "nyc": {
+    "include": [
+      "dist/**/*.js",
+      "src/**/*.ts"
+    ],
+    "extension": [
+      ".js",
+      ".ts"
+    ],
+    "exclude": [
+      "**/test"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "sourceMap": true
+  }
+}
