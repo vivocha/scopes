@@ -5,6 +5,7 @@
     "noImplicitAny": false,
     "sourceMap": true,
     "declaration": true,
+    "rootDir": "src",
     "outDir": "dist",
     "strictNullChecks": true,
     "allowJs": false

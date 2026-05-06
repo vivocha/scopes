@@ -1,5 +1,5 @@
 import * as chai from "chai";
-import * as chaiAsPromised from "chai-as-promised";
+import chaiAsPromised = require("chai-as-promised");
 import { Scopes } from "./../../dist/index";
 
 const should = chai.should();
@@ -153,5 +153,51 @@ describe("Scopes", function() {
       .filter("User.delete User.update Asset.delete Asset.update Asset.read")
       .toArray()
       .should.deep.equal(["User.update", "Asset.read"]);
+  });
+
+  it("should get scope values", function() {
+    const s = new Scopes(["User.*", "-User.create", "Sessions.read", "*.update"]);
+
+    // Test get(category, operation) - specific scope
+    const userWildcard = s.get("User", "*");
+    should.exist(userWildcard);
+    userWildcard!.should.equal(true);
+
+    const userCreate = s.get("User", "create");
+    should.exist(userCreate);
+    userCreate!.should.equal(false);
+
+    const sessionsRead = s.get("Sessions", "read");
+    should.exist(sessionsRead);
+    sessionsRead!.should.equal(true);
+
+    const wildcardUpdate = s.get("*", "update");
+    should.exist(wildcardUpdate);
+    wildcardUpdate!.should.equal(true);
+
+    should.not.exist(s.get("NonExistent", "operation"));
+    should.not.exist(s.get("User", "nonExistent"));
+
+    // Test get(category) - entire category
+    const userCategory = s.get("User");
+    should.exist(userCategory);
+    if (userCategory) {
+      userCategory["*"].should.equal(true);
+      userCategory["create"].should.equal(false);
+    }
+
+    const sessionsCategory = s.get("Sessions");
+    should.exist(sessionsCategory);
+    if (sessionsCategory) {
+      sessionsCategory["read"].should.equal(true);
+    }
+
+    const wildcardCategory = s.get("*");
+    should.exist(wildcardCategory);
+    if (wildcardCategory) {
+      wildcardCategory["update"].should.equal(true);
+    }
+
+    should.not.exist(s.get("NonExistent"));
   });
 });

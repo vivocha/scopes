@@ -37,6 +37,14 @@ export class Scopes {
     }
     this[category][operation] = value;
   }
+  get(category: string): {[key: string]: boolean} | undefined;
+  get(category: string, operation: string): boolean | undefined;
+  get(category: string, operation?: string): {[key: string]: boolean} | boolean | undefined {
+    if (operation !== undefined) {
+      return this[category]?.[operation];
+    }
+    return this[category];
+  }
   toArray(): string[] {
     let s: string[] = [];
     for (let i in this) {

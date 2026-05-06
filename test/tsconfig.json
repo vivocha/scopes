@@ -5,7 +5,10 @@
     "noImplicitAny": false,
     "sourceMap": false,
     "declaration": false,
-    "strictNullChecks": true
+    "rootDir": ".",
+    "strictNullChecks": true,
+    "types": ["mocha", "chai", "node"],
+    "skipLibCheck": true
   },
   "include": [
     "./**/*"
