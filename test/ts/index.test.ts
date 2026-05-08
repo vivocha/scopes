@@ -1,9 +1,7 @@
 import * as chai from "chai";
-import chaiAsPromised = require("chai-as-promised");
 import { Scopes } from "./../../dist/index";
 
 const should = chai.should();
-chai.use(chaiAsPromised);
 
 describe("Scopes", function() {
   it("should return all the scopes as an array", function() {
