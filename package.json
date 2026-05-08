@@ -1,6 +1,6 @@
 {
   "name": "@vivocha/scopes",
-  "version": "0.0.0-development",
+  "version": "2.0.0",
   "description": "Vivocha API Scopes Utilities",
   "engines": {
     "node": ">=24.0.0"
